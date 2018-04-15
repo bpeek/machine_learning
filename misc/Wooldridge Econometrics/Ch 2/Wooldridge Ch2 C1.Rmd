@@ -1,0 +1,60 @@
+---
+title: "Wooldridge Ch2"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/401k.RData")
+```
+## Ch 2 Answers
+
+These are my answers to the end of chapter computer exercise C1 in Chapter 2 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C1
+The variables in the dataset are:
+
+1. prate - participation rate, percent
+2. mrate - 401k plan match rate
+3. totpart - total 401k participants
+4. totelg - total eligible for 401k plan
+5. age - age of 401k plan
+6. totemp - total number of firm employees
+7. sole - equal to 1 if 401k is firm's sole plan
+8. ltotemp - log of totemp
+
+###i)
+```{r , echo=TRUE}
+mean(data$prate)
+mean(data$mrate)
+
+```
+###ii)
+
+```{r , echo=FALSE}
+plot(data$prate ~ data$mrate, xlab = "Match Rate", ylab = "Participation Rate")
+
+```
+
+```{r , echo = TRUE}
+participation.model <- lm(prate ~ mrate, data = data)
+summary(participation.model)
+```
+Sample size: 1534
+
+R-squared: 0.075
+
+###iii)
+The intercept is 83.08 and the coefficient on mrate is 5.86. If the match rate is zero, the expected participation rate is 83.08%. The coefficient on mrate means that for each unit change in the match rate the expected participation rate changes by 5.86.
+
+###iv)
+```{r, echo=TRUE}
+predict(participation.model, newdata = data.frame(mrate = 3.5))
+```
+
+This doesn't make sense because the participation rate cannot be greater than 100%. This is happening because we are using a model with no upper limit to predict an outcome with a limit at 100. The relationship does not appear to be linear so the model above is not appropriate.
+
+###v)
+The R-squared is very low at 0.075. The variation in the match rate does not explain much of the variation in the participation rate.

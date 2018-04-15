@@ -1,0 +1,93 @@
+---
+title: "Wooldridge Ch2"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/meap93.RData")
+```
+## Ch 2 Answers
+
+These are my answers to the end of chapter computer exercise C6 in Chapter 2 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C6
+
+###i)
+
+```{r, echo=TRUE}
+plot(data$expend, data$math10, xlab = "Expenditures", ylab = "Math Pass Rate")
+```
+
+From the plot it seems possible that there could be a linear relationship between expenditure and pass rate but economic theory would lead me to think that there are diminishing returns to each dollar invested and that the plot is tricking my eyes somehow.
+
+###ii
+\begin{equation}
+math10 = \beta_0 + \beta_1 ln(expend) + u
+\end{equation}
+Since the log of a product is the sum of the logs of each element,
+\begin{equation}
+\beta_1 ln(expend*1.10) = \beta_1 [ln(expend) + ln(1.10)]
+\end{equation}
+
+\begin{equation}
+= \beta_1 ln(expend) + \beta_1 ln(1.10)
+\end{equation}
+and since,
+\begin{equation}
+ln(1.10) \approx 0.1
+\end{equation}
+we have,
+\begin{equation}
+= \beta_1 ln(expend) + \beta_1*0.1
+\end{equation}
+If the right side of the equation increases by $\beta_1/10 * 0.1$ then the left must also.
+\begin{equation}
+math10 + \beta_1/10*0.1 = \beta_0 + \beta_1 ln(expend) + \beta_1/10*0.1 + u
+\end{equation}
+This gives us,
+\begin{equation}
+math10 + \beta_1*0.01 = \beta_0 + \beta_1 ln(expend) + \beta_1*0.01 + u
+\end{equation}
+which means that math10 increases $\beta_1$ percent.
+
+###iii)
+```{r , echo=TRUE}
+score.model <- lm(math10 ~ log(expend), data=data)
+summary(score.model)
+```
+\begin{equation}
+\widehat math10 = -69.341 +  11.164 ln(expend) \\
+sample size = 408 \\
+R^2 = 0.03
+\end{equation}
+
+###iv)
+\begin{equation}
+11.164/10 = 1.1164
+\end{equation}
+So a 10% increase in expenditures will lead to an increase of 1.12% in math scores.
+
+```{r, echo=TRUE}
+plot(data$math10~log(data$expend))
+abline(lm(math10~log(expend), data = data))
+max(data$expend)
+```
+
+From the chart we can see that expenditures would need to increase far beyond anything in the dataset to get near an expected math10 of 100. Using the results of the regression,
+\begin{equation}
+100 = -69.341 +  11.164 ln(expend) 
+\end{equation}
+solving for expenditure,
+\begin{equation}
+(100 + 69.341)/11.164 = ln(expend) \\ 
+15.17 = ln(expend) \\
+expend = e^{15.17} \\
+= 3,874,782
+\end{equation}
+which is way higher than the current maximum expenditure of 7,419 so we shouldn't be concerned about reaching the upper limit of the possible scores in math10.
+
+
+

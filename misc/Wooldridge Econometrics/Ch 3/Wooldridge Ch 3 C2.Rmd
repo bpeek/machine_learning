@@ -1,0 +1,64 @@
+---
+title: "Wooldridge Ch3"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/hprice1.RData")
+```
+## Ch 3 Answers
+
+These are my answers to the end of chapter computer exercise C2 in Chapter 3 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C2
+
+###i)
+```{r, echo=TRUE}
+price.model <- lm(price ~ sqrft + bdrms, data = data)
+summary(price.model)
+```
+\begin{equation}
+\widehat{price} = -19.32 + 0.128*sqrft + 15.2*bdrms \\
+samplesize = 88 \\ 
+R^2 = 0.632
+\end{equation}
+
+###ii)
+
+Holding square footage constant the expected increase in price for one more bedroom is about $15,198.
+
+###iii)
+
+```{r, echo=TRUE}
+0.128*140 + 15.2*1
+```
+The price is expected to increase by about $33k. This makes sense because it is adding a new bedroom without sacrificing space elsewhere in the house. When square footage is held constant and bedrooms are added it means that other rooms in the house have to be smaller to make up for the additional bedrooms. It is safe to assume that up to a certain point people value larger rooms and therefore would value an additional bedroom more if it wasn't eating up the space of other rooms.
+
+###iv)
+
+The $R^2$ is 0.6319 so the percentage of the variation in price explained by square footage and bedrooms is 63.19%.
+
+###v)
+```{r, echo=TRUE}
+price.pred <- predict(price.model, newdata = data.frame(sqrft = 2438, bdrms = 4))
+price.pred
+
+```
+The predicted price for a 2,438 square foot house with 4 bedrooms is about $355k.
+
+###vi)
+```{r, echo=TRUE}
+difference <- 300 - price.pred
+difference
+```
+The difference between the predicted price of $355k and the actual purchase price of $300k is $55k. This suggests that the buyer underpaid for the house.
+
+
+
+
+
+
+

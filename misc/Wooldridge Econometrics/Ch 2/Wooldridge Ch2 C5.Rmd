@@ -1,0 +1,36 @@
+---
+title: "Wooldridge Ch2"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/rdchem.RData")
+```
+## Ch 2 Answers
+
+These are my answers to the end of chapter computer exercise C5 in Chapter 2 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C5
+
+###i)
+
+A constant elasticity model is a model in which the natural log is taken of both the dependent and independent variables before the regression is performed. This leads to a model where an approximate 1% change in the independent variable leads to an expected change of approximately $\beta_1$% in the dependent variable. In this model, the $\beta_1$ parameter is the elasticity.
+
+\begin{equation}
+ln(rd_i) = \beta_0 + \beta_1 ln(sales_i) + \epsilon_i
+\end{equation}
+
+###ii
+```{r , echo=TRUE}
+elasticity.model <- lm(log(rd) ~ log(sales), data = data)
+summary(elasticity.model)
+```
+The estimated regression equation is,
+\begin{equation}
+\widehat{ln(rd_i)} = -4.1 + 1.08 ln(sales_i)
+\end{equation}
+
+The estimated elasticity of rd with respect to sales is 1.08. In other words, research and development is expected to increase by approximately 1.08% for every 1% increase in annual sales.
