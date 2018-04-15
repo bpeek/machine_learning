@@ -1,0 +1,68 @@
+---
+title: "Wooldridge Ch2"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/charity.RData")
+```
+## Ch 2 Answers
+
+These are my answers to the end of chapter computer exercise C7 in Chapter 2 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C7
+
+###i)
+
+```{r, echo=TRUE}
+mean(data$gift)
+sum(data$gift == 0)/length(data$gift)
+```
+
+The average gift is 7.4 and 60% of people did not give a gift.
+
+###ii
+```{r, echo=TRUE}
+mean(data$mailsyear)
+min(data$mailsyear)
+max(data$mailsyear)
+```
+
+The average mailings per year is 2.5 with a minimum of 0.25 and maximum of 3.5.
+
+###iii)
+```{r, echo=TRUE}
+charity.model <- lm(gift ~ mailsyear, data = data)
+summary(charity.model)
+```
+\begin{equation}
+\widehat gift = 2.01 + 2.65*mailsyear \\
+sample size = 4268 \\
+R^2 = 0.014
+\end{equation}
+
+###iv)
+An increase of one mailing per year is expected to increase the gifts per year by 2.65. A mailing costing 1 guilder would lead to a net gain of 1.65 for the charity. This doesn't mean the charity will have a net gain every time but on average over repeated mailings the charity can expect to come out ahead.
+
+###v)
+The smallest predicted charitable contribution in the sample would be 2.014. This is the expected amount of gifts if there are no mailings at all. This model would never predict zero for gift because it estimates about 2 gifts when the charity doesn't do any outreach.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

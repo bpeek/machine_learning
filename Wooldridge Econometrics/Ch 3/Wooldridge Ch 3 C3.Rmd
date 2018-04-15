@@ -1,0 +1,67 @@
+---
+title: "Wooldridge Ch3"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/ceosal2.RData")
+```
+## Ch 3 Answers
+
+These are my answers to the end of chapter computer exercise C3 in Chapter 3 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C3
+
+###i)
+```{r, echo=TRUE}
+salary.model <- lm(lsalary ~ lsales + lmktval, data = data)
+summary(salary.model)
+```
+\begin{equation}
+\widehat{lsales} = 4.62 + 0.162*lsales + 0.107*lmktval \\
+samplesize = 177 \\ 
+R^2 = 0.2991
+\end{equation}
+
+###ii)
+```{r, echo=TRUE}
+salary.model.2 <- lm(lsalary ~ lsales + lmktval + profits, data = data)
+summary(salary.model.2)
+```
+
+
+\begin{equation}
+\widehat{lsales} = 4.69 + 0.161*lsales + 0.098*lmktval + 0.0000357*profits \\
+samplesize = 177 \\ 
+R^2 = 0.2993
+\end{equation}
+
+Profits cannot be in logarithmic form because some of the values are negative and the natural log is only defined for values greater than zero. The $R^2$ is 0.2993 so only about 30% of the variation in CEO salaries is explained by the three variables in the model. Most of the variation is left unexplained in this model.
+
+###iii)
+```{r, echo=TRUE}
+salary.model.3 <- lm(lsalary ~ lsales + lmktval + profits + ceoten, data = data)
+summary(salary.model.3)
+```
+
+
+\begin{equation}
+\widehat{lsales} = 4.56 + 0.162*lsales + 0.102*lmktval + 0.0000291*profits + 0.0117*ceoten \\
+samplesize = 177 \\ 
+R^2 = 0.3183
+\end{equation}
+
+Holding all other variables constant, the salary of a CEO is expected to increase 1.17% for every extra year they are CEO.
+
+
+###iv)
+```{r, echo=TRUE}
+cor(data$lmktval, data$profits)
+```
+The correlation coefficient is 0.78 which means that the two explanatory variables are highly correlated. This means that there is a strong linear relationship between the two variables and there may be a multicollinearity problem. This leads to a higher variance for both coefficients which can lead to them failing the test of significance. 
+
+
+
