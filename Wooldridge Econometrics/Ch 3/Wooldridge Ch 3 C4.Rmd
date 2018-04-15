@@ -1,0 +1,82 @@
+---
+title: "Wooldridge Ch3"
+author: "Brendan Peek"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, echo=FALSE}
+load("C:/Users/Brendan/Desktop/Datasets/Wooldridge Econometrics Data/attend.RData")
+```
+## Ch 3 Answers
+
+These are my answers to the end of chapter computer exercise C4 in Chapter 3 of Introductory Econometrics 5e by Jeffrey Wooldridge.
+
+###C4
+```{r, echo=FALSE}
+desc
+```
+###i)
+
+The minimum, maximum, and average of attendance rate, GPA prior to term, and ACT score to get the table below,
+
+```{r, echo=FALSE}
+atndrte <- c(min(data$atndrte), max(data$atndrte), mean(data$atndrte))
+priGPA <- c(min(data$priGPA), max(data$priGPA), mean(data$priGPA))
+ACT <- c(min(data$ACT), max(data$ACT), mean(data$ACT))
+school <- matrix(c(atndrte,priGPA,ACT), ncol = 3)
+colnames(school) <- c("atndrte", "priGPA","ACT")
+rownames(school) <- c("min","max","average")
+school <- as.table(school)
+school
+```
+
+###ii)
+
+The model, 
+\begin{equation}
+atndrte = \beta_0 + \beta_1*priGPA + \beta_2*ACT + u
+\end{equation}
+
+was estimated.
+```{r, echo=FALSE}
+attend.model <- lm(atndrte ~ priGPA + ACT, data=data)
+summary(attend.model)
+```
+The estimated equation, sample size and $R^2$ are,
+
+\begin{equation}
+\widehat{atndrte} = 75.7 + 17.261*priGPA - 1.717*ACT \\
+sample size = 680 \\
+R^2 = 0.2906
+\end{equation}
+
+The intercept means that if a student had both prior GPA and ACT score equal to zero the expected attendance rate is about 76%. If it is the student's first term at the school then prior GPA could be zero but ACT score would not be zero so the intercept doesn't mean anything.
+
+###iii)
+The positive prior term GPA coefficient makes sense. If a student has a high GPA then they probably attend more classes. The negative ACT coefficient is a suprise though. A student with a high ACT score is likely hard working and studious and therefore more likely to attend classes. It's odd that a higher ACT score predicts lower class attendance.
+
+###iv)
+The predicted attendance rate of a student with a prior GPA of 3.65 and an ACT score of 20 is,
+```{r, echo=FALSE}
+predict(attend.model, newdata = data.frame(priGPA = 3.65, ACT = 20))
+```
+This result doesn't make sense because the maximum possible attendance rate is 100. A student can't attend more than 100% of the time.
+
+There is a student with a prior GPA of 3.65 and ACT score of 20 and their attendance rate is 87.5. 
+
+###v)
+```{r, echo=FALSE}
+A <- predict(attend.model, newdata = data.frame(priGPA = 3.1, ACT = 20))
+B <- predict(attend.model, newdata = data.frame(priGPA = 2.1, ACT = 26))
+difference <- A - B 
+
+students <- matrix(round(c(A,B,difference),2), ncol = 3)
+colnames(students) <- c("Student A", "Student B","Difference")
+rownames(students) <- c("Attendance Rate")
+
+students <- as.table(students)
+students
+```
+The predicted difference between student A and student B is 27.6. The predicted attendance rate of student A is 94.9% and for student B is 67.3%.
